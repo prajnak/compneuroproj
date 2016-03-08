@@ -24,7 +24,7 @@ def main(arg):
     for f in filenames:
       fs = f.split('.')
       if fs[1] == "JPG" and fs[0].endswith("S"):
-        shutil.copy(dirpath + "\\" + f, outputDir + "\\" + fs[0][:-1] + "." + fs[1])
+        shutil.copy(dirpath + "\\" + f, outputDir + "\\" + fs[0][0:2] + "0" + fs[0][2:-1] + "." + fs[1])
 
 if __name__ == '__main__':
   main(sys.argv[1:])
