@@ -31,10 +31,10 @@ def main(arg):
                       '6': 'SA',
                       '7': 'SU'
   }
-  import pdb; pdb.set_trace();
   all_images = []; #paths to the last image for each subject
   all_subjects = None;
-  all_emotions = [];
+  all_emotions = []; # only 300 or so of the 500 sequences are labeled with an emotion
+  gender = 'U'; #no gender info provided for ck+ dataset
   for k,v in optlist:
     if k == "-h":
       print "Usage: python grabCKPlusImages.py [-i INPUT_DIR -o OUTPUT_DIR]"
@@ -50,7 +50,6 @@ def main(arg):
 
     rema = re.search(r'\d+$', dirpath);
     if rema is not None:
-      print(rema.groups())
       #if dirpath.endswith('00'): 
       if len(filenames) != 0 and filenames[len(filenames)-1].endswith('png'):
         all_images.append(os.path.join(dirpath, filenames[len(filenames) - 1]));
@@ -61,11 +60,15 @@ def main(arg):
     if rema is not None:
       if len(filenames) != 0 and filenames[0].endswith('emotion.txt'):
          emo_filepath = os.path.join(dirpath, filenames[0]);
-         print(emo_filepath)
-    #print(fs)
-    #if fs[1] == "txt":
-      #print (fs)
+         all_emotions.append(emo_filepath)
+         f = open(emo_filepath, 'r'); 
+         emo_code = str(int(float(f.readlines()[0].strip(' ').strip('\n'))))
+         f.close()
+         print(emotion_map[emo_code], emo_code) 
+         subject_number = emo_filepath.split('/')[-1].split('_emotion.txt')[0].split('_')[0].strip('S')
+         new_filename = 'C' + gender + subject_number + emotion_map[emo_code] + '.png';
+         print(new_filename)
+         ## strip out the _emotion.txt and create a new filename for the image
       #shutil.copy(dirpath + "\\" + f, outputDir + "\\" + fs[0][0:2] + "0" + fs[0][2:-1] + "." + fs[1])
-  import pdb; pdb.set_trace();
 if __name__ == '__main__':
   main(sys.argv[1:])
