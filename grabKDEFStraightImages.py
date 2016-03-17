@@ -3,11 +3,6 @@ import getopt
 import os
 import shutil
 
-"""rootDir = 'D:\\Data Sets\\trippy'
-if len(sys.argv) > 1:
-  rootDir = sys.argv[1]
-  """
-
 def main(arg):
   optlist, args = getopt.getopt(arg, 'hi:o:')
   inputDir = 'D:/Data Sets/trippy/KDEF/KDEF'
