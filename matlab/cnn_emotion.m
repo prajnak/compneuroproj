@@ -1,7 +1,7 @@
 function [net, info] = cnn_emotion(varargin)
-% nmost, prajnak, rootmeansquare
+% nmost, prajnak, rootmeansquare, adopted from MatConvNet examples
 
-run('vl_setupnn')
+run('vl_setupnn') %wherever this is located on your computer
 
 opts.batchNormalization = false ;
 opts.networkType = 'simplenn' ;
@@ -20,7 +20,7 @@ if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
 %                                                         Prepare data
 % --------------------------------------------------------------------
 
-net = cnn_emotion_init_old('batchNormalization', opts.batchNormalization, ...
+net = cnn_emotion_init('batchNormalization', opts.batchNormalization, ...
                      'networkType', opts.networkType) ;
 
 imdb = load('imdb.mat') ;
