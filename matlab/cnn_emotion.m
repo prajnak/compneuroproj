@@ -24,6 +24,12 @@ net = cnn_emotion_init('batchNormalization', opts.batchNormalization, ...
                      'networkType', opts.networkType) ;
 
 imdb = load('imdb.mat') ;
+deviation_data = bsxfun(@minus, imdb.images.data, imdb.images.data_mean);
+% imdb.images.data = deviation_data;
+imdb.images.data = gpuArray(deviation_data);
+imdb.images.data_mean = gpuArray(imdb.images.data_mean);
+imdb.images.labels = gpuArray(imdb.images.labels);
+imdb.images.set = gpuArray(imdb.images.set);
 
 
 net.meta.classes.name = arrayfun(@(x)sprintf('%d',x),1:10,'UniformOutput',false) ;
